@@ -27,6 +27,7 @@ public class CartItem {
     @JoinColumn(name = "pen_id")
     private Pen pen;
 
+    @Column(nullable = false)
     private int quantity;
 
     public BigDecimal getSubtotal() {
