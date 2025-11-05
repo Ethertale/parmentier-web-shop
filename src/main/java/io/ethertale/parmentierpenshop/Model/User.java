@@ -3,6 +3,7 @@ package io.ethertale.parmentierpenshop.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -44,4 +45,11 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
+
+    @Column(nullable = false)
+    private LocalDateTime createdOn;
+
+    public String getCreatedOnFormated(){
+        return createdOn.getDayOfMonth()+"."+createdOn.getMonthValue()+"."+createdOn.getYear();
+    }
 }

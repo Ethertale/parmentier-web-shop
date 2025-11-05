@@ -8,6 +8,7 @@ import io.ethertale.parmentierpenshop.Repo.UserRepo;
 import io.ethertale.parmentierpenshop.Security.AuthenticationDetails;
 import io.ethertale.parmentierpenshop.Web.Dto.RegisterUserDto;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,11 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
@@ -46,12 +49,14 @@ public class UserService implements UserDetailsService {
                 .password(passwordEncoder.encode(registerUserDTO.getPassword()))
                 .role(Roles.USER)
                 .orders(new HashSet<>())
+                .createdOn(LocalDateTime.now())
                 .build();
 
         Cart newCart = Cart.builder()
                 .user(newUser)
                 .items(new HashSet<>())
                 .totalPrice(BigDecimal.valueOf(0))
+                .createdOn(LocalDateTime.now())
                 .build();
 
         userRepo.save(newUser);
@@ -71,6 +76,8 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+
+        log.info("User with username {} logged in at {}", user.getUsername(), LocalDateTime.now());
 
         return new AuthenticationDetails(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getRole(), user.getOrders(), user.getCart());
     }

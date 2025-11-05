@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +30,9 @@ public class CartItem {
 
     @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
+    private LocalDateTime createdOn;
 
     public BigDecimal getSubtotal() {
         return pen.getPrice().multiply(BigDecimal.valueOf(quantity));

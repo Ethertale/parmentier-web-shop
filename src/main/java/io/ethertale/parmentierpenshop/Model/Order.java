@@ -36,6 +36,9 @@ public class Order {
     private LocalDateTime orderDate;
 
     @Column(nullable = false)
+    private LocalDateTime createdOn;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // e.g. "PENDING", "SHIPPED", "DELIVERED"
 }

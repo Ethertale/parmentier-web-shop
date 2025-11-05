@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -43,5 +44,8 @@ public class Pen {
 
     @Column(nullable = false)
     private String imageUrl;
+
+    @Column(nullable = false)
+    private LocalDateTime createdOn;
 
 }

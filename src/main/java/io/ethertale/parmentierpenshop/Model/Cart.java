@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -30,6 +31,9 @@ public class Cart {
 
     @Column(nullable = false)
     private BigDecimal totalPrice = BigDecimal.ZERO;
+
+    @Column(nullable = false)
+    private LocalDateTime createdOn;
 
     public void updateTotalPrice() {
         this.totalPrice = items.stream()

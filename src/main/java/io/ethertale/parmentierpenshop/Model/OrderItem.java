@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="order_items")
@@ -30,7 +31,10 @@ public class OrderItem {
     private int quantity;
 
     @Column(nullable = false)
-    private BigDecimal price; // price at time of order
+    private BigDecimal price;
+
+    @Column(nullable = false)
+    private LocalDateTime createdOn;
 
     public BigDecimal getSubtotal() {
         return price.multiply(BigDecimal.valueOf(quantity));
